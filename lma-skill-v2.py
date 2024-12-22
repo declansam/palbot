@@ -17,7 +17,7 @@
     
     Todo:
         - Add hierarchical transformers for fine-grained and global task modeling.
-        - Integrate sensor data (e.g., RGBD, LiDAR) to replace dummy robot state.
+        - Integrate sensor data (e.g., RGBD, LiDAR) to replace robot state.
         - Handle real-world constraints, such as 10 Hz and 50 Hz task update rates.
         - Fine-tune CLIP model on robot-specific tasks for better performance.
 '''
@@ -193,7 +193,7 @@ def simulate():
     image_height = 224
     image_width = 224
 
-    image = torch.randn(1, 3, image_height, image_width)  # Placeholder for a camera input
+    image = torch.randn(1, 3, image_height, image_width)                    # A single camera input (RGB simulation)
 
     # Extract CLIP features
     inputs = clip_processor(text=task_text, images=image, return_tensors="pt", padding=True)
@@ -205,7 +205,7 @@ def simulate():
 
     # Combine attention features with robot state (e.g., base velocity, EE pose)
     robot_state_dim = 128
-    robot_state = torch.randn(1, robot_state_dim)                       # Placeholder for state (e.g., from sensors)
+    robot_state = torch.randn(1, robot_state_dim)                       # Different states (e.g., from sensors)
 
     transformer_input = torch.cat([attention_features.flatten(), robot_state.flatten()], dim=-1).unsqueeze(0)
 
